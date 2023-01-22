@@ -77,7 +77,7 @@ def martingale(win_prob):
                 episode_winnings = episode_winnings - bet_amount
                 bet_amount = bet_amount * 2
                 
-def martingale_bankroll_contraint(win_prob):
+def martingale_bankroll_constraint(win_prob):
     curr_spin = 0
     max_spins = 1000
     bankroll = 256
