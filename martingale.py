@@ -21,9 +21,9 @@ GT honor code violation.
   		  	   		  		 			  		 			     			  	 
 -----do not edit anything above this line---  		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
-Student Name: Tucker Balch (replace with your name)  		  	   		  		 			  		 			     			  	 
-GT User ID: tb34 (replace with your User ID)  		  	   		  		 			  		 			     			  	 
-GT ID: 900897987 (replace with your GT ID)  		  	   		  		 			  		 			     			  	 
+Student Name: Garvey Jackson (replace with your name)  		  	   		  		 			  		 			     			  	 
+GT User ID: gjackson67 (replace with your User ID)  		  	   		  		 			  		 			     			  	 
+GT ID: 903742455 (replace with your GT ID)  		  	   		  		 			  		 			     			  	 
 """  		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
 import numpy as np  		  	   		  		 			  		 			     			  	 
@@ -59,7 +59,7 @@ def get_spin_result(win_prob):
         result = True  		  	   		  		 			  		 			     			  	 
     return result  		  	   		  		 			  		 			     			  	 
 
-def martiangale(win_prob):
+def martingale(win_prob):
     ceiling = 80
     episode_winnings = 0
     while episode_winnings < ceiling:
@@ -74,7 +74,7 @@ def martiangale(win_prob):
                 episode_winnings = episode_winnings - bet_amount
                 bet_amount = bet_amount * 2
                 
-def martiangale_bankroll_contraint(win_prob):
+def martingale_bankroll_contraint(win_prob):
     bankroll = 256
     ceiling = 80
     episode_winnings = 0
@@ -97,10 +97,6 @@ def martiangale_bankroll_contraint(win_prob):
 def bankroll_depleted(bankroll, episode_winnings):
     # bet amounts should never put us in debt; so winnings will equal (-1 * bankroll)
     return True if episode_winnings == (-1 * bankroll) else False
-    
-# def set_bet_amount(bankroll, episode_winnings, bet_amount):
-#     max_possible_bet = calculate_max_possible_bet(bankroll, episode_winnings, bet_amount)
-#     return max_possible_bet
 
 def calculate_max_possible_bet(bankroll, episode_winnings, desired_bet):
     max_possible_bet = 0
@@ -116,15 +112,14 @@ def calculate_max_possible_bet(bankroll, episode_winnings, desired_bet):
             # if abs of potential_remaining exceeds winnings and bankroll, max value equals sum of winnings and bankroll
             max_possible_bet = episode_winnings + bankroll
     print("max possible bet: ", max_possible_bet)
-    return max_possible_bet		  		 			  		 			     			  	 
- 		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
+    return max_possible_bet   	  		 			  		 			     			  	 
+  	   		  		 			  		 			     			  	 
 def test_code():  		  	   		  		 			  		 			     			  	 
     """  		  	   		  		 			  		 			     			  	 
     Method to test your code  		  	   		  		 			  		 			     			  	 
     """  		  	   		  		 			  		 			     			  	 
-    win_prob = 0.60  # set appropriately to the probability of a win, this is the probability of landing on black	
-    # 47.37 = .4737 for black?	  	   		  		 			  		 			     			  	 
+    win_prob = .474  # set appropriately to the probability of a win, this is the probability of landing on black	
+	  	   		  		 			  		 			     			  	 
     np.random.seed(gtid())  # do this only once  		  	   		  		 			  		 			     			  	 
     print(get_spin_result(win_prob))  # test the roulette spin  		  	   		  		 			  		 			     			  	 
     # add your code here to implement the experiments  		  	   		  		 			  		 			     			  	 
