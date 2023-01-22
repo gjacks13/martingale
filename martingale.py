@@ -67,27 +67,13 @@ def martingale(win_prob):
     while (episode_winnings < ceiling) and (curr_spin < max_spins):
         won = False
         bet_amount = 1
-        print("##############", "\n\n")
-        print("###1curr spin: ", curr_spin)
-        print("episode_winnings: ", episode_winnings)
         while not won:
-            print("##############", "\n\n")
-            print("####2curr spin: ", curr_spin)
-            print("episode_winnings: ", episode_winnings)
             # spin with win probablity of landing on black
             won = get_spin_result(win_prob)
-            print("spin result before math: ", won)
-            print("bet amount: ", bet_amount)
             curr_spin += 1
             if won == True:
-                print("curr total winnings: ", episode_winnings)
-                print("adding to winnings: ", bet_amount)
-                print("new total winnings: ", episode_winnings + bet_amount)
                 episode_winnings = episode_winnings + bet_amount
             else:
-                print("curr total winnings: ", episode_winnings)
-                print("removing from winnings: ",  bet_amount)
-                print("new total winnings: ", episode_winnings - bet_amount)
                 episode_winnings = episode_winnings - bet_amount
                 bet_amount = bet_amount * 2
                 
@@ -143,11 +129,6 @@ def test_code():
     np.random.seed(gtid())  # do this only once  		  	   		  		 			  		 			     			  	 
     print(get_spin_result(win_prob))  # test the roulette spin  		  	   		  		 			  		 			     			  	 
     # add your code here to implement the experiments  		  	   		  		 			  		 			     			  	 
-  	
-    # calculate_max_possible_bet(bankroll, episode_winnings, desired_bet)
-    # max = calculate_max_possible_bet(256, -254, 80)	 
-    martingale(win_prob)
-    print("final max: ", max)
   		  	   		  		 			  		 			     			  	 
 if __name__ == "__main__":  		  	   		  		 			  		 			     			  	 
     test_code()  	
