@@ -59,46 +59,51 @@ def get_spin_result(win_prob):
         result = True
     return result  		  	   		  		 			  		 			     			  	 
 
-def martingale(win_prob):
+def martingale(win_prob, max_spins = 1000):
+    print("max_spins: ", max_spins)
+    winnings = np.zeros(max_spins + 1, dtype=np.int_)
+    print("original winnings: ", winnings)
     curr_spin = 0
-    max_spins = 1000
     ceiling = 80
     episode_winnings = 0
     while (episode_winnings < ceiling) and (curr_spin < max_spins):
         won = False
         bet_amount = 1
-        while not won:
-            # spin with win probablity of landing on black
+        while not won and (curr_spin < max_spins):
             won = get_spin_result(win_prob)
             curr_spin += 1
+            print("curr_spin: ", curr_spin)
             if won == True:
                 episode_winnings = episode_winnings + bet_amount
+                winnings[curr_spin] = bet_amount
+                print("new winnings: ", winnings)
             else:
                 episode_winnings = episode_winnings - bet_amount
                 bet_amount = bet_amount * 2
+                winnings[curr_spin] = bet_amount * -1
+                print("new winnings: ", winnings)
+    return winnings
                 
-def martingale_bankroll_constraint(win_prob):
+def martingale_bankroll_constraint(win_prob, max_spins = 1000):
+    winnings = np.zeros(max_spins + 1)
     curr_spin = 0
-    max_spins = 1000
     bankroll = 256
     ceiling = 80
     episode_winnings = 0
     while (episode_winnings < ceiling) and (not bankroll_depleted(bankroll, episode_winnings)) and (curr_spin < max_spins):
         won = False
         bet_amount = 1
-        while not won:
-            # spin with win probablity of landing on black
+        while not won and (not bankroll_depleted(bankroll, episode_winnings)) and (curr_spin < max_spins):
             won = get_spin_result(win_prob)
             curr_spin += 1
             if won == True:
                 episode_winnings = episode_winnings + bet_amount
+                winnings[curr_spin] = bet_amount
             else:
-                # check if episode winnings depleted our bankroll
-                if bankroll_depleted(bankroll, episode_winnings):
-                    break
-
                 episode_winnings = episode_winnings - bet_amount
                 bet_amount = calculate_max_possible_bet(bankroll, episode_winnings, bet_amount)
+                winnings[curr_spin] = bet_amount * -1
+    return winnings
                 
 def bankroll_depleted(bankroll, episode_winnings):
     # bet amounts should never put us in debt; so winnings will equal (-1 * bankroll)
@@ -117,7 +122,6 @@ def calculate_max_possible_bet(bankroll, episode_winnings, desired_bet):
         if (potential_remaining < 0) and (bankroll < abs(potential_remaining)):
             # if abs of potential_remaining exceeds winnings and bankroll, max value equals sum of winnings and bankroll
             max_possible_bet = episode_winnings + bankroll
-    print("max possible bet: ", max_possible_bet)
     return max_possible_bet   	  		 			  		 			     			  	 
 	  		 			  		 			     			  	 
 def test_code():  		  	   		  		 			  		 			     			  	 
@@ -127,8 +131,27 @@ def test_code():
     win_prob = .474  # set appropriately to the probability of a win, this is the probability of landing on black	
 	  	   		  		 			  		 			     			  	 
     np.random.seed(gtid())  # do this only once  		  	   		  		 			  		 			     			  	 
-    print(get_spin_result(win_prob))  # test the roulette spin  		  	   		  		 			  		 			     			  	 
-    # add your code here to implement the experiments  		  	   		  		 			  		 			     			  	 
+    print(get_spin_result(win_prob))  # test the roulette spin  
+    # martingale(win_prob)		  	   		  		 			  		 			     			  	 
+    # add your code here to implement the experiments
+    
+    spins_per_episode = 1000
+    
+    # figure 1
+    episode_count = 2
+    experiment_1_array_a = np.zeros((episode_count,4))
+    print("origininal experiment_1_array_a: ", experiment_1_array_a)
+    print("origininal experiment_1_array_a index 0: ", experiment_1_array_a[0])
+    print("origininal experiment_1_array_a index 1: ", experiment_1_array_a[1])
+    for i in range(episode_count):
+        print("i: ", i)
+        arr = martingale(win_prob, 3)
+        print("appending to final: ", arr)
+        experiment_1_array_a[i] = arr
+        print("updated experiment_1_array_a: ", experiment_1_array_a)
+
+    print("final experiment_1_array_a: ", experiment_1_array_a)
+    # print("final arr: ", arr)
   		  	   		  		 			  		 			     			  	 
 if __name__ == "__main__":  		  	   		  		 			  		 			     			  	 
     test_code()  	
